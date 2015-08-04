@@ -37,7 +37,10 @@ public class RawClopesActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //Pas d'écran de setting sur cette activity
             return true;
+        } else if((id == R.id.action_generate_random_clope)) {
+            generateRandomDataSet();
         }
 
         return super.onOptionsItemSelected(item);
@@ -61,5 +64,16 @@ public class RawClopesActivity extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.raw_clope_list);
         listView.setAdapter(adapter);
 
+    }
+
+    private void generateRandomDataSet() {
+        //Business
+        ClopeBusiness business = new ClopeBusiness(this);
+
+        for(int i = 0; i < 30; i++) {
+            business.addRandomClope();
+        }
+
+        populateListView();
     }
 }
