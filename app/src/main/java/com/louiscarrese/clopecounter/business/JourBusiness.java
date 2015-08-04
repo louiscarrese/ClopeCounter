@@ -99,12 +99,12 @@ public class JourBusiness {
         Clope clope = new Clope();
         clope.setDate(new Date());
 
+        //Ecriture de la Clope
+        realm.copyToRealm(clope);
+
         //Mise à jour des stats du jour qui prennent en compte le Jour courant
         jour.setNbClopes(jour.getNbClopes() + 1);
         jour.setAvg7Predict(computeAvg(clope.getDate(), -7, 0));
-
-        //Ecriture de la Clope
-        realm.copyToRealm(clope);
 
         //Commit
         realm.commitTransaction();
@@ -244,15 +244,17 @@ public class JourBusiness {
      * @return
      */
     private float computeAvg(Date date, int offsetStart, int offsetEnd) {
+        Date strippedDate = stripHours(date);
+
         //Calcul de la date de debut
         Calendar calDeb = new GregorianCalendar();
-        calDeb.setTime(date);
+        calDeb.setTime(strippedDate);
         calDeb.add(Calendar.DAY_OF_YEAR, offsetStart);
         Date dateDeb = calDeb.getTime();
 
         //Calcul de la date de fin
         Calendar calFin = new GregorianCalendar();
-        calFin.setTime(date);
+        calFin.setTime(strippedDate);
         calFin.add(Calendar.DAY_OF_YEAR, offsetEnd);
         Date dateFin = calFin.getTime();
 
