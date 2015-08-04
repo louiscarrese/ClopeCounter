@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:gravity="fill_vertical">
+    <LinearLayout
+        android:id="@+id/today_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView android:id="@+id/today_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aujourd'hui : "
+            android:textSize="24sp"
+            />
+        <TextView android:id="@+id/today_value"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="10"
+            android:textSize="24sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/avg7_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/today_group"
+        >
+        <TextView android:id="@+id/avg7_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7 jours : "
+            android:textSize="24sp"
+            />
+        <TextView android:id="@+id/avg7_value"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="25"
+            android:textSize="24sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/avg7_predict_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/avg7_group"
+        >
+        <TextView android:id="@+id/avg7_predict_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7 jours (demain): "
+            android:textSize="24sp"
+            />
+        <TextView android:id="@+id/avg7_predict_value"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="25"
+            android:textSize="24sp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_clope"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="CLOPE !"
+        android:textSize="32sp"
+        android:layout_alignParentBottom="true"
+        android:onClick="addClope"
+        />
+<!--
+    <Button
+        android:id="@+id/rebuild_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Rebuild Stats"
+        android:textSize="46dp"
+        android:layout_above="@id/add_clope"
+        android:onClick="refreshStats"
+        />
+    <Button
+        android:id="@+id/add_random_clope"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Random Clope"
+        android:textSize="46dp"
+        android:layout_above="@id/add_clope"
+        android:onClick="addRandomClope"
+        />
+-->
+
+</RelativeLayout>
