@@ -7,11 +7,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.louiscarrese.clopecounter.business.JourBusiness;
 import com.louiscarrese.clopecounter.model.Jour;
+import com.louiscarrese.clopecounter.model.Migration;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 /**
@@ -59,6 +64,22 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
+        //Handle the Realm configuration
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(context)
+                .name("default.realm")
+                .schemaVersion(1) //TODO: Mettre ça quelque part en conf peut être ?
+                .migration(new Migration())
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+
+        try {
+            Realm realm = Realm.getInstance(realmConfig);
+            realm.close();
+        } catch(Exception e) {
+            Log.e("MainActivity", "Error getting realm", e);
+            return;
+        }
+
     }
 
     @Override
