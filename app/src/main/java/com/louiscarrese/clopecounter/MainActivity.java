@@ -1,5 +1,6 @@
 package com.louiscarrese.clopecounter;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,11 @@ import io.realm.RealmConfiguration;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_CLOPE_LIST = 1;
+    private static final int REQUEST_CODE_JOUR_LIST = 2;
+
+    protected static final int RESULT_REFRESH = RESULT_FIRST_USER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_raw_clope:
                 Intent rawClopesIntent = new Intent(this, RawClopesActivity.class);
-                startActivity(rawClopesIntent);
+                startActivityForResult(rawClopesIntent, REQUEST_CODE_CLOPE_LIST);
                 return true;
             case R.id.action_raw_jour:
                 Intent rawJourIntent = new Intent(this, RawJourActivity.class);
-                startActivity(rawJourIntent);
+                startActivityForResult(rawJourIntent, REQUEST_CODE_JOUR_LIST);
                 return true;
             case R.id.action_rebuild_stats:
                 refreshStats(null);
@@ -81,6 +87,26 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_CODE_CLOPE_LIST:
+            case REQUEST_CODE_JOUR_LIST:
+                if(resultCode == RESULT_REFRESH) {
+                    refreshCounters();
+                }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshCounters();
     }
 
     public void addClope(View view) {
@@ -114,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         refreshCounters(jour);
     }
     private void refreshCounters(Jour jour) {
+        //Refresh counters on the main activity
         TextView todayValue = (TextView)findViewById(R.id.today_value);
         TextView avg7Value = (TextView)findViewById(R.id.avg7_value);
         TextView avg7PredictValue = (TextView)findViewById(R.id.avg7_predict_value);
@@ -126,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.today_value)).setTextColor(Color.RED);
         }
 
+
+        //Schedule a refresh of the widget
+        Intent intent = new Intent(this,ClopeCounterAppWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int id = R.xml.clope_counter_app_widget_info;
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,id);
+        sendBroadcast(intent);
 
     }
 }

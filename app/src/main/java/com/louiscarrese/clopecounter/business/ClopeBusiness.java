@@ -29,6 +29,17 @@ public class ClopeBusiness {
 
     }
 
+    public Clope createClope() {
+        Realm realm = Realm.getDefaultInstance();
+
+        long id = realm.where(Clope.class).maximumInt("id") + 1;
+
+        Clope c = new Clope();
+        c.setId(id);
+
+        return c;
+    }
+
     public List<Clope> getAll() {
 
         Realm realm = Realm.getDefaultInstance();
@@ -39,12 +50,17 @@ public class ClopeBusiness {
         return results.subList(0, results.size());
     }
 
-    public void delete(long id) {
+    public void delete(Clope clope) {
+        JourBusiness jourBusiness = new JourBusiness(context);
+        Jour jour = jourBusiness.getJourFromClope(clope);
+
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
-        realm.where(Clope.class).equalTo("id", id).findAll().clear();
+        realm.where(Clope.class).equalTo("id", clope.getId()).findAll().clear();
         realm.commitTransaction();
+
+        jourBusiness.refreshStats(jour);
     }
 
     public Clope addRandomClope() {
@@ -61,7 +77,7 @@ public class ClopeBusiness {
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, second);
 
-        Clope c = new Clope();
+        Clope c = createClope();
         c.setDate(cal.getTime());
 
         Realm realm = Realm.getDefaultInstance();

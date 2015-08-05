@@ -28,6 +28,9 @@ public class RawClopesActivity extends ActionBarActivity {
         setContentView(R.layout.activity_raw_clopes);
 
         populateListView();
+
+        //Default result :
+        setResult(RESULT_OK);
     }
 
     @Override
@@ -70,7 +73,7 @@ public class RawClopesActivity extends ActionBarActivity {
             case R.id.menu_ctx_clope_delete:
                 ListView listView = (ListView) findViewById(R.id.raw_clope_list);
                 Clope clope = (Clope)(listView.getAdapter().getItem(info.position));
-                deleteClope(clope.getId());
+                deleteClope(clope);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -103,15 +106,15 @@ public class RawClopesActivity extends ActionBarActivity {
         }
 
         populateListView();
+        setResult(MainActivity.RESULT_REFRESH);
     }
 
-    private void deleteClope(long id) {
+    private void deleteClope(Clope clope) {
         ClopeBusiness business = new ClopeBusiness(this);
 
-        business.delete(id);
+        business.delete(clope);
 
         populateListView();
-
-        Log.d("verbose : ", "clope id a deleter : " + id);
+        setResult(MainActivity.RESULT_REFRESH);
     }
 }

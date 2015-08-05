@@ -23,7 +23,7 @@ import io.realm.RealmConfiguration;
  * Implementation of App Widget functionality.
  */
 public class ClopeCounterAppWidget extends AppWidgetProvider {
-    private static final String ADD_CLICKED    = "clopeCounterWidgetAddClopeClick";
+    protected static final String ADD_CLICKED    = "clopeCounterWidgetAddClopeClick";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -37,26 +37,19 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
         if (ADD_CLICKED.equals(intent.getAction())) {
+            int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
 
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-
-            RemoteViews remoteViews;
-            ComponentName watchWidget;
-
-            remoteViews = new RemoteViews(context.getPackageName(), R.layout.clope_counter_app_widget);
-            watchWidget = new ComponentName(context, ClopeCounterAppWidget.class);
-
-
+            //Ajout de la clope
             JourBusiness utils = new JourBusiness(context);
-
             Jour jour = utils.addClope();
 
-            updateCounter(remoteViews, jour);
+            updateAppWidget(context, appWidgetManager, widgetId);
 
-            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-
+        } else if(AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
+            updateAppWidget(context, appWidgetManager, intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0));
         }
     }
 
@@ -87,6 +80,25 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    private void updateWidget(Context context) {
+        JourBusiness business = new JourBusiness(context);
+        Jour jour = business.getToday();
+
+        updateWidget(context, jour);
+    }
+
+    private void updateWidget(Context context, Jour jour) {
+
+        //Mise à jour du widget
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.clope_counter_app_widget);
+        ComponentName watchWidget = new ComponentName(context, ClopeCounterAppWidget.class);
+
+        updateCounter(remoteViews, jour);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        appWidgetManager.updateAppWidget(watchWidget, remoteViews);
+
+    }
+
 
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -102,7 +114,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         updateCounter(views, jour);
 
         //Make the button clickable
-        views.setOnClickPendingIntent(R.id.appwidget_addclope, getPendingSelfIntent(context, ADD_CLICKED));
+        views.setOnClickPendingIntent(R.id.appwidget_addclope, getPendingSelfIntent(context, ADD_CLICKED, appWidgetId));
 
 
         // Instruct the widget manager to update the widget
@@ -119,9 +131,10 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
 
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+    protected PendingIntent getPendingSelfIntent(Context context, String action, int widgetId) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 }

@@ -1,6 +1,7 @@
 package com.louiscarrese.clopecounter.business;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
@@ -27,6 +28,17 @@ public class JourBusiness {
 
     public JourBusiness(Context ctx) {
         this.context = ctx.getApplicationContext();
+    }
+
+    public Jour createJour() {
+        Realm realm = Realm.getDefaultInstance();
+
+        long id = realm.where(Jour.class).maximumInt("id") + 1;
+
+        Jour j = new Jour();
+        j.setId(id);
+
+        return j;
     }
 
     public Date getCurrentDate() {
@@ -90,12 +102,14 @@ public class JourBusiness {
      * @return Le jours modifié.
      */
     public Jour addClope(Jour jour) {
+        ClopeBusiness clopeBusiness = new ClopeBusiness(context);
+
         //Ouverture de la transaction
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
         //Création de l'objet Clope
-        Clope clope = new Clope();
+        Clope clope = clopeBusiness.createClope();
         clope.setDate(new Date());
 
         //Ecriture de la Clope
@@ -161,21 +175,17 @@ public class JourBusiness {
             //Si c'est la première fois qu'on le voit on l'ajoute
             Jour j;
             if(!jours.containsKey(dateJourString)) {
-                j = new Jour();
+                j = createJour();
                 j.setDate(dateJour);
 
                 jours.put(dateJourString, j);
             } else {
                 j = jours.get(dateJourString);
             }
-
-            //On lui ajoute une clope
-            j.setNbClopes(j.getNbClopes() + 1);
         }
 
         //On ajoute tous les jours au Realm
         realm.beginTransaction();
-//        List<Jour> joursFromDb = realm.copyToRealm(jours.values());
         List<Jour> joursFromDb = new ArrayList<Jour>();
         for(Jour j : jours.values()) {
             joursFromDb.add(realm.copyToRealm(j));
@@ -183,16 +193,38 @@ public class JourBusiness {
         realm.commitTransaction();
 
         //On recalcule les moyennes de tous les Jours après que toutes les clopes aient été mises
-//        RealmResults<Jour> joursFromDb = realm.where(Jour.class).findAll();
-        realm.beginTransaction();
         for(int i = 0; i < joursFromDb.size(); i++) {
-            Jour j = joursFromDb.get(i);
-            j.setAvg7(computeAvg(j.getDate(), -8, -1));
-            j.setAvg7Predict(computeAvg(j.getDate(), -7, 0));
+            refreshStats(joursFromDb.get(i));
         }
+
+
+    }
+
+
+    public Jour refreshStats(Jour j) {
+        Realm realm = Realm.getDefaultInstance();
+
+        long nbClopes = realm.where(Clope.class).between("date", j.getDate(), getEndDate(j)).count();
+
+        realm.beginTransaction();
+        j.setNbClopes((int)nbClopes);
+        j.setAvg7(computeAvg(j.getDate(), -8, -1));
+        j.setAvg7Predict(computeAvg(j.getDate(), -7, 0));
         realm.commitTransaction();
 
+        return j;
+    }
 
+    public Date getEndDate(Jour j) {
+        Date d = j.getDate();
+
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(d);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+
+        Date dEnd = cal.getTime();
+
+        return dEnd;
     }
 
     /**
@@ -207,6 +239,15 @@ public class JourBusiness {
 
     }
 
+    public Jour getJourFromClope(Clope clope) {
+        Date dateJour = getDateJourFromDateClope(clope.getDate());
+
+        Realm realm = Realm.getDefaultInstance();
+        Jour ret = realm.where(Jour.class).equalTo("date", dateJour).findFirst();
+
+        return ret;
+    }
+
     /**
      * Initialise un Jour pour la date donnée.
      * -> Nombre de clopes : 0
@@ -218,7 +259,7 @@ public class JourBusiness {
     private Jour initJour(Date date) {
 
         //Création de l'objet
-        Jour ret = new Jour();
+        Jour ret = createJour();
 
         ret.setDate(date);
 
