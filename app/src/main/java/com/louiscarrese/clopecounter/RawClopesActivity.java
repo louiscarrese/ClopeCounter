@@ -1,14 +1,23 @@
 package com.louiscarrese.clopecounter;
 
+import android.app.ListActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.louiscarrese.clopecounter.adapter.ClopeAdapter;
 import com.louiscarrese.clopecounter.business.ClopeBusiness;
 import com.louiscarrese.clopecounter.model.Clope;
+
+import java.util.List;
 
 
 public class RawClopesActivity extends ActionBarActivity {
@@ -46,23 +55,42 @@ public class RawClopesActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_ctx_raw_clope, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_ctx_clope_delete:
+                ListView listView = (ListView) findViewById(R.id.raw_clope_list);
+                Clope clope = (Clope)(listView.getAdapter().getItem(info.position));
+                deleteClope(clope.getId());
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
     private void populateListView() {
 
         ClopeBusiness business = new ClopeBusiness(this);
-        Clope[] clopes = business.getAll();
-
-        //Conversion en String
-        String[] clopeStrings = new String[clopes.length];
-        for(int i = 0; i < clopes.length; i++) {
-            clopeStrings[i] = business.clopeToString(clopes[i]);
-        }
+        List<Clope> clopes = business.getAll();
 
         //Création de l'adapter
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, clopeStrings);
+        ClopeAdapter adapter = new ClopeAdapter(this.getApplicationContext(), clopes);
 
         //Remplissage de la ListView
         ListView listView = (ListView) findViewById(R.id.raw_clope_list);
         listView.setAdapter(adapter);
+
+        //Menu contextuel pour supprimer une clope
+        registerForContextMenu(listView);
 
     }
 
@@ -75,5 +103,15 @@ public class RawClopesActivity extends ActionBarActivity {
         }
 
         populateListView();
+    }
+
+    private void deleteClope(long id) {
+        ClopeBusiness business = new ClopeBusiness(this);
+
+        business.delete(id);
+
+        populateListView();
+
+        Log.d("verbose : ", "clope id a deleter : " + id);
     }
 }

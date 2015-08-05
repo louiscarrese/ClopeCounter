@@ -8,6 +8,7 @@ import com.louiscarrese.clopecounter.model.Jour;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -28,14 +29,22 @@ public class ClopeBusiness {
 
     }
 
-    public Clope[] getAll() {
+    public List<Clope> getAll() {
 
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<Clope> query = realm.where(Clope.class);
 
         RealmResults<Clope> results = query.findAllSorted("date");
 
-        return results.toArray(new Clope[0]);
+        return results.subList(0, results.size());
+    }
+
+    public void delete(long id) {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        realm.where(Clope.class).equalTo("id", id).findAll().clear();
+        realm.commitTransaction();
     }
 
     public Clope addRandomClope() {
