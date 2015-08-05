@@ -9,12 +9,21 @@ import io.realm.RealmObject;
  */
 public class Jour extends RealmObject {
 
+    private long id;
+
     private Date date;
 
     private int nbClopes;
     private float avg7;
     private float avg7Predict;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
     public Date getDate() {
         return date;
     }

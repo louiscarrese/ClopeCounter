@@ -55,8 +55,7 @@ public class JourBusiness {
      */
     public Jour getToday() {
         //Ouverture de la base de données
-        Realm realm = Realm.getInstance(this.context);
-
+        Realm realm = Realm.getDefaultInstance();
         //Construction de la requete
         RealmQuery<Jour> query = realm.where(Jour.class);
         query.equalTo("date", this.getCurrentDate());
@@ -92,7 +91,7 @@ public class JourBusiness {
      */
     public Jour addClope(Jour jour) {
         //Ouverture de la transaction
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
         //Création de l'objet Clope
@@ -118,7 +117,7 @@ public class JourBusiness {
      */
     public Jour[] getAll() {
 
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
 
         //TODO: Simplifier en n'explicitant pas la Query et en utilisant allObjects() ?
         RealmQuery<Jour> query = realm.where(Jour.class);
@@ -135,14 +134,14 @@ public class JourBusiness {
      * @return Une String représentant le Jour
      */
     public String jourToString(Jour j) {
-        return j.getDate().toString() + " - " + j.getNbClopes() + " - " + j.getAvg7() + " - " + j.getAvg7Predict();
+        return j.getId() + " - " + j.getDate().toString() + " - " + j.getNbClopes() + " - " + j.getAvg7() + " - " + j.getAvg7Predict();
     }
 
     /**
      * Recalcule tous les Jours.
      */
     public void refreshStats() {
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
 
         //Suppression de tous les jours
         realm.beginTransaction();
@@ -222,16 +221,18 @@ public class JourBusiness {
         Jour ret = new Jour();
 
         ret.setDate(date);
-        ret.setNbClopes(0);
-        ret.setAvg7(computeAvg(date, -8, -1));
-        ret.setAvg7Predict(computeAvg(date, 7, 0)); //TODO: Calcul certainement faux puisque le jour courant n'existe pas encore...
 
         //Ecriture en base
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealm(ret);
+        Jour realmJour = realm.copyToRealm(ret);
         realm.commitTransaction();
 
+        realm.beginTransaction();
+        realmJour.setNbClopes(0);
+        realmJour.setAvg7(computeAvg(date, -8, -1));
+        realmJour.setAvg7Predict(computeAvg(date, 7, 0)); //TODO: Calcul certainement faux puisque le jour courant n'existe pas encore...
+        realm.commitTransaction();
         return ret;
     }
 
@@ -259,7 +260,7 @@ public class JourBusiness {
         Date dateFin = calFin.getTime();
 
         //Ouverture de la base de données
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
 
         //Construction de la requete
         RealmQuery<Jour> query = realm.where(Jour.class).between("date", dateDeb, dateFin);

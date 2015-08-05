@@ -24,14 +24,13 @@ public class ClopeBusiness {
     }
 
     public String clopeToString(Clope c) {
-        return c.getDate().toString();
+        return c.getId() + " - " + c.getDate().toString();
 
     }
 
     public Clope[] getAll() {
 
-        Realm realm = Realm.getInstance(this.context);
-
+        Realm realm = Realm.getDefaultInstance();
         RealmQuery<Clope> query = realm.where(Clope.class);
 
         RealmResults<Clope> results = query.findAllSorted("date");
@@ -56,7 +55,7 @@ public class ClopeBusiness {
         Clope c = new Clope();
         c.setDate(cal.getTime());
 
-        Realm realm = Realm.getInstance(this.context);
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealm(c);
         realm.commitTransaction();

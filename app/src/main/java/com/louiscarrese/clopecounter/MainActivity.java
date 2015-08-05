@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.louiscarrese.clopecounter.business.ClopeBusiness;
 import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
+import com.louiscarrese.clopecounter.model.Migration;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +25,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Handle the Realm configuration
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this.getApplicationContext())
+                .name("default.realm")
+                .schemaVersion(1) //TODO: Mettre ça quelque part en conf peut être ?
+                .migration(new Migration())
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+
+        try {
+            Realm realm = Realm.getInstance(realmConfig);
+            realm.close();
+        } catch(Exception e) {
+            Log.e("MainActivity", "Error getting realm", e);
+            return;
+        }
 
         refreshCounters();
 
@@ -43,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch(id) {
             case R.id.action_settings:
+
                 //TODO: Faire l'écran de settings
                 return true;
             case R.id.action_raw_clope:
