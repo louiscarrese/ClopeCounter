@@ -66,9 +66,9 @@ public class ClopeBusiness {
 
         realm.beginTransaction();
         realm.where(Clope.class).equalTo("id", clope.getId()).findAll().clear();
+        jourBusiness.refreshStats(jour);
         realm.commitTransaction();
 
-        jourBusiness.refreshStats(jour);
     }
 
     public Clope addRandomClope() {
