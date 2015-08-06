@@ -1,16 +1,13 @@
 package com.louiscarrese.clopecounter;
 
-import android.app.ListActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.louiscarrese.clopecounter.adapter.ClopeAdapter;
@@ -20,12 +17,12 @@ import com.louiscarrese.clopecounter.model.Clope;
 import java.util.List;
 
 
-public class RawClopesActivity extends ActionBarActivity {
+public class ListClopesActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_raw_clopes);
+        setContentView(R.layout.activity_list_clopes);
 
         populateListView();
 
@@ -36,7 +33,7 @@ public class RawClopesActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_raw_clopes, menu);
+        getMenuInflater().inflate(R.menu.menu_list_clopes, menu);
         return true;
     }
 

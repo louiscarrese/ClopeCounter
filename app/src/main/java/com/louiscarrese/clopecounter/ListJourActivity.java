@@ -11,12 +11,12 @@ import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
 
 
-public class RawJourActivity extends ActionBarActivity {
+public class ListJourActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_raw_jour);
+        setContentView(R.layout.activity_list_jours);
 
         populateListView();
     }
@@ -24,7 +24,7 @@ public class RawJourActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_raw_jour, menu);
+        getMenuInflater().inflate(R.menu.menu_list_jours, menu);
         return true;
     }
 

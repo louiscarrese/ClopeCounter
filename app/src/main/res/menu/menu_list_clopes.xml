@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.louiscarrese.clopecounter.RawClopesActivity">
+    tools:context="com.louiscarrese.clopecounter.ListClopesActivity">
     <item android:id="@+id/action_generate_random_clope" android:title="Generate random clopes"
         android:orderInCategory="100" />
 </menu>

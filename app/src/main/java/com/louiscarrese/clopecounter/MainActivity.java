@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.louiscarrese.clopecounter.business.ClopeBusiness;
-import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
 import com.louiscarrese.clopecounter.model.Migration;
@@ -74,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 //TODO: Faire l'écran de settings
                 return true;
             case R.id.action_raw_clope:
-                Intent rawClopesIntent = new Intent(this, RawClopesActivity.class);
+                Intent rawClopesIntent = new Intent(this, ListClopesActivity.class);
                 startActivityForResult(rawClopesIntent, REQUEST_CODE_CLOPE_LIST);
                 return true;
             case R.id.action_raw_jour:
-                Intent rawJourIntent = new Intent(this, RawJourActivity.class);
+                Intent rawJourIntent = new Intent(this, ListJourActivity.class);
                 startActivityForResult(rawJourIntent, REQUEST_CODE_JOUR_LIST);
                 return true;
             case R.id.action_rebuild_stats:
