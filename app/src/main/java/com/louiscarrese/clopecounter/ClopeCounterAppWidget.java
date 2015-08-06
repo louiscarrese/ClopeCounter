@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.louiscarrese.clopecounter.business.JourBusiness;
@@ -28,10 +27,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
-            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
-        }
+        updateAllWidgets(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -40,16 +36,18 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
         if (ADD_CLICKED.equals(intent.getAction())) {
-            int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
 
             //Ajout de la clope
             JourBusiness utils = JourBusiness.getInstance();
             Jour jour = utils.addClope();
 
-            updateAppWidget(context, appWidgetManager, widgetId);
+            int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ClopeCounterAppWidget.class));
+            updateAllWidgets(context, appWidgetManager, appWidgetIds);
 
         } else if(AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
-            updateAppWidget(context, appWidgetManager, intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0));
+
+            int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ClopeCounterAppWidget.class));
+            updateAllWidgets(context, appWidgetManager, appWidgetIds);
         }
     }
 
@@ -80,25 +78,12 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private void updateWidget(Context context) {
-        JourBusiness business = JourBusiness.getInstance();
-        Jour jour = business.getToday();
-
-        updateWidget(context, jour);
+    private void updateAllWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        final int N = appWidgetIds.length;
+        for (int i = 0; i < N; i++) {
+            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+        }
     }
-
-    private void updateWidget(Context context, Jour jour) {
-
-        //Mise à jour du widget
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.clope_counter_app_widget);
-        ComponentName watchWidget = new ComponentName(context, ClopeCounterAppWidget.class);
-
-        updateCounter(remoteViews, jour);
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-
-    }
-
 
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -114,8 +99,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         updateCounter(views, jour);
 
         //Make the button clickable
-        views.setOnClickPendingIntent(R.id.appwidget_addclope, getPendingSelfIntent(context, ADD_CLICKED, appWidgetId));
-
+        views.setOnClickPendingIntent(R.id.appwidget_addclope, getPendingSelfIntent(context, ADD_CLICKED));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -131,11 +115,10 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
 
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action, int widgetId) {
+    protected PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 }
 

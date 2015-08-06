@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,ClopeCounterAppWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int id = R.xml.clope_counter_app_widget_info;
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,id);
         sendBroadcast(intent);
 
     }
