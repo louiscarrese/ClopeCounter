@@ -59,7 +59,9 @@ public class ListJourActivity extends ActionBarActivity {
         //Remplissage de la ListView
         View header = (View)getLayoutInflater().inflate(R.layout.jours_list_header, null);
         ListView listView = (ListView) findViewById(R.id.raw_jour_list);
-        listView.addHeaderView(header);
+        if(listView.getHeaderViewsCount() == 0) {
+            listView.addHeaderView(header, null, false);
+        }
         listView.setAdapter(adapter);
 
     }

@@ -88,7 +88,9 @@ public class ListClopesActivity extends ActionBarActivity {
         //Remplissage de la ListView
         View header = (View)getLayoutInflater().inflate(R.layout.clope_list_header, null);
         ListView listView = (ListView) findViewById(R.id.raw_clope_list);
-        listView.addHeaderView(header);
+        if(listView.getHeaderViewsCount() == 0) {
+            listView.addHeaderView(header, null, false);
+        }
         listView.setAdapter(adapter);
 
         //Menu contextuel pour supprimer une clope
