@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.louiscarrese.clopecounter.R;
 import com.louiscarrese.clopecounter.model.Clope;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,10 @@ public class ClopeAdapter extends ArrayAdapter<Clope> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.clope_list, parent, false);
         }
         // Lookup view for data population
-        TextView clopeId = (TextView) convertView.findViewById(R.id.clope_id);
         TextView clopeDate = (TextView) convertView.findViewById(R.id.clope_date);
         // Populate the data into the template view using the data object
-        clopeId.setText(String.format("%d", clope.getId()) );
-        clopeDate.setText(clope.getDate().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        clopeDate.setText(sdf.format(clope.getDate()));
         // Return the completed view to render on screen
         return convertView;
     }

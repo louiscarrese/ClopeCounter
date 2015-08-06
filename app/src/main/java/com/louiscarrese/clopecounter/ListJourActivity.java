@@ -4,11 +4,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.louiscarrese.clopecounter.adapter.JourAdapter;
 import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
+
+import java.util.List;
 
 
 public class ListJourActivity extends ActionBarActivity {
@@ -47,19 +51,15 @@ public class ListJourActivity extends ActionBarActivity {
     private void populateListView() {
         //Récupération de la liste des jours
         JourBusiness business = JourBusiness.getInstance();
-        Jour[] jours = business.getAll();
-
-        //Conversion en String (puisque Realm ne peut pas le faire tout seul)
-        String[] jourStrings = new String[jours.length];
-        for(int i = 0; i < jours.length; i++) {
-            jourStrings[i] = business.jourToString(jours[i]);
-        }
+        List<Jour> jours = business.getAll();
 
         //Création de l'adapter
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, jourStrings);
+        JourAdapter adapter = new JourAdapter(this, jours);
 
         //Remplissage de la ListView
+        View header = (View)getLayoutInflater().inflate(R.layout.jours_list_header, null);
         ListView listView = (ListView) findViewById(R.id.raw_jour_list);
+        listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
     }

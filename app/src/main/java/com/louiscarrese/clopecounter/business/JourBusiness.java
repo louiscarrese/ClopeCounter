@@ -135,16 +135,15 @@ public class JourBusiness {
      * Renvoie tous les jours (attention aux perfs...)
      * @return Un array de tous les jours en BDD
      */
-    public Jour[] getAll() {
+    public List<Jour> getAll() {
 
         Realm realm = Realm.getDefaultInstance();
 
         //TODO: Simplifier en n'explicitant pas la Query et en utilisant allObjects() ?
         RealmQuery<Jour> query = realm.where(Jour.class);
-
         RealmResults<Jour> results = query.findAllSorted("date");
 
-        return results.toArray(new Jour[0]);
+        return results.subList(0, results.size());
     }
 
     /**
