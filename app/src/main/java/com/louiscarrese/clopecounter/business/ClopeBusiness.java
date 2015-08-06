@@ -18,10 +18,18 @@ import io.realm.RealmResults;
  * Created by loule on 18/07/2015.
  */
 public class ClopeBusiness {
-    private Context context;
 
-    public ClopeBusiness(Context ctx) {
-        this.context = ctx.getApplicationContext();
+    /** Singleton implementation */
+    private static ClopeBusiness instance = null;
+
+    private ClopeBusiness() {
+    }
+
+    public static ClopeBusiness getInstance() {
+        if(instance == null) {
+            instance = new ClopeBusiness();
+        }
+        return instance;
     }
 
     public String clopeToString(Clope c) {
@@ -51,7 +59,7 @@ public class ClopeBusiness {
     }
 
     public void delete(Clope clope) {
-        JourBusiness jourBusiness = new JourBusiness(context);
+        JourBusiness jourBusiness = JourBusiness.getInstance();
         Jour jour = jourBusiness.getJourFromClope(clope);
 
         Realm realm = Realm.getDefaultInstance();

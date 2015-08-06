@@ -24,10 +24,17 @@ import io.realm.RealmResults;
  */
 public class JourBusiness {
 
-    private Context context;
+    /** Singleton implementation */
+    private static JourBusiness instance = null;
 
-    public JourBusiness(Context ctx) {
-        this.context = ctx.getApplicationContext();
+    private JourBusiness() {
+    }
+
+    public static JourBusiness getInstance() {
+        if(instance == null) {
+            instance = new JourBusiness();
+        }
+        return instance;
     }
 
     public Jour createJour() {
@@ -102,7 +109,7 @@ public class JourBusiness {
      * @return Le jours modifié.
      */
     public Jour addClope(Jour jour) {
-        ClopeBusiness clopeBusiness = new ClopeBusiness(context);
+        ClopeBusiness clopeBusiness = ClopeBusiness.getInstance();
 
         //Ouverture de la transaction
         Realm realm = Realm.getDefaultInstance();

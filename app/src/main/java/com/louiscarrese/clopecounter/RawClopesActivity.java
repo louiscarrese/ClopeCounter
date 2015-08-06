@@ -82,7 +82,7 @@ public class RawClopesActivity extends ActionBarActivity {
 
     private void populateListView() {
 
-        ClopeBusiness business = new ClopeBusiness(this);
+        ClopeBusiness business = ClopeBusiness.getInstance();
         List<Clope> clopes = business.getAll();
 
         //Création de l'adapter
@@ -99,7 +99,7 @@ public class RawClopesActivity extends ActionBarActivity {
 
     private void generateRandomDataSet() {
         //Business
-        ClopeBusiness business = new ClopeBusiness(this);
+        ClopeBusiness business = ClopeBusiness.getInstance();
 
         for(int i = 0; i < 30; i++) {
             business.addRandomClope();
@@ -110,7 +110,7 @@ public class RawClopesActivity extends ActionBarActivity {
     }
 
     private void deleteClope(Clope clope) {
-        ClopeBusiness business = new ClopeBusiness(this);
+        ClopeBusiness business = ClopeBusiness.getInstance();
 
         business.delete(clope);
 

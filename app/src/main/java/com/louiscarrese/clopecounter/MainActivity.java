@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.louiscarrese.clopecounter.business.ClopeBusiness;
+import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
 import com.louiscarrese.clopecounter.model.Migration;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addClope(View view) {
-        JourBusiness business = new JourBusiness(this);
+        JourBusiness business = JourBusiness.getInstance();
 
         Jour jour = business.addClope();
 
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshStats(View view) {
-        JourBusiness business = new JourBusiness(this);
+        JourBusiness business = JourBusiness.getInstance();
 
         business.refreshStats();
 
@@ -126,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addRandomClope(View view) {
-        ClopeBusiness business = new ClopeBusiness(this);
+        ClopeBusiness business = ClopeBusiness.getInstance();
 
         business.addRandomClope();
 
     }
 
     private void refreshCounters() {
-        JourBusiness utils = new JourBusiness(this);
+        JourBusiness utils = JourBusiness.getInstance();
 
         Jour jour = utils.getToday();
 

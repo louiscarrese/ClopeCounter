@@ -43,7 +43,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
             int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
 
             //Ajout de la clope
-            JourBusiness utils = new JourBusiness(context);
+            JourBusiness utils = JourBusiness.getInstance();
             Jour jour = utils.addClope();
 
             updateAppWidget(context, appWidgetManager, widgetId);
@@ -81,7 +81,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
     }
 
     private void updateWidget(Context context) {
-        JourBusiness business = new JourBusiness(context);
+        JourBusiness business = JourBusiness.getInstance();
         Jour jour = business.getToday();
 
         updateWidget(context, jour);
@@ -103,7 +103,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        JourBusiness utils = new JourBusiness(context);
+        JourBusiness utils = JourBusiness.getInstance();
 
         Jour jour = utils.getToday();
 

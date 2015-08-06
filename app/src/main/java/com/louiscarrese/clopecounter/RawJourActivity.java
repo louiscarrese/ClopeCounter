@@ -46,7 +46,7 @@ public class RawJourActivity extends ActionBarActivity {
 
     private void populateListView() {
         //Récupération de la liste des jours
-        JourBusiness business = new JourBusiness(this);
+        JourBusiness business = JourBusiness.getInstance();
         Jour[] jours = business.getAll();
 
         //Conversion en String (puisque Realm ne peut pas le faire tout seul)
