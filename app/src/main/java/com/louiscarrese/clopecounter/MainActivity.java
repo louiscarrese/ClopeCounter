@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.louiscarrese.clopecounter.business.ClopeBusiness;
 import com.louiscarrese.clopecounter.business.JourBusiness;
 import com.louiscarrese.clopecounter.model.Jour;
 
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_CLOPE_LIST = 1;
     private static final int REQUEST_CODE_JOUR_LIST = 2;
 
-    protected static final int RESULT_REFRESH = RESULT_FIRST_USER;
+    static final int RESULT_REFRESH = RESULT_FIRST_USER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(rawJourIntent, REQUEST_CODE_JOUR_LIST);
                 return true;
             case R.id.action_rebuild_stats:
-                refreshStats(null);
+                refreshStats();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -89,24 +88,17 @@ public class MainActivity extends AppCompatActivity {
     public void addClope(View view) {
         JourBusiness business = JourBusiness.getInstance();
 
-        Jour jour = business.addClope();
+        business.addClope();
 
         refreshCounters();
     }
 
-    public void refreshStats(View view) {
+    private void refreshStats() {
         JourBusiness business = JourBusiness.getInstance();
 
         business.refreshStats();
 
         refreshCounters();
-    }
-
-    public void addRandomClope(View view) {
-        ClopeBusiness business = ClopeBusiness.getInstance();
-
-        business.addRandomClope();
-
     }
 
     private void refreshCounters() {
@@ -124,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
         TextView avg7PredictValue = (TextView)findViewById(R.id.avg7_predict_value);
 
         todayValue.setText(String.format("%d", jour.getNbClopes()));
-        avg7Value.setText(String.format("%.2g", jour.getAvg7()));
-        avg7PredictValue.setText(String.format("%.2g", jour.getAvg7Predict()));
+        avg7Value.setText(String.format("%.2f", jour.getAvg7()));
+        avg7PredictValue.setText(String.format("%.2f", jour.getAvg7Predict()));
 
         if(jour.getNbClopes() > jour.getAvg7()) {
             ((TextView)findViewById(R.id.today_value)).setTextColor(Color.RED);
@@ -135,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         //Schedule a refresh of the widget
         Intent intent = new Intent(this,ClopeCounterAppWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        int id = R.xml.clope_counter_app_widget_info;
         sendBroadcast(intent);
 
     }

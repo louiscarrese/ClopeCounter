@@ -75,25 +75,5 @@
         android:layout_alignParentBottom="true"
         android:onClick="addClope"
         />
-<!--
-    <Button
-        android:id="@+id/rebuild_stats"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Rebuild Stats"
-        android:textSize="46dp"
-        android:layout_above="@id/add_clope"
-        android:onClick="refreshStats"
-        />
-    <Button
-        android:id="@+id/add_random_clope"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Random Clope"
-        android:textSize="46dp"
-        android:layout_above="@id/add_clope"
-        android:onClick="addRandomClope"
-        />
--->
 
 </RelativeLayout>

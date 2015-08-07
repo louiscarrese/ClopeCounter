@@ -5,10 +5,9 @@
     <string name="title_activity_raw_clopes">Data : Clopes</string>
     <string name="title_activity_raw_jour">Data : Jours</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="add_widget">Add widget</string>
 
     <!-- MainActivity -->
-    <string name="main_today">Aujourd'hui</string>
+    <string name="main_today">Aujourd\'hui</string>
     <string name="main_avg7">7 jours :</string>
     <string name="main_avg7_predict">7 jours (demain) :</string>
     <string name="main_clope_button">Clope !</string>

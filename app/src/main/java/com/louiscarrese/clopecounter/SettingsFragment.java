@@ -45,12 +45,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         if(key.equals(endDayPref.getHourKey())) {
             JourBusiness.getInstance().setEndDayHour(sharedPreferences.getInt(key, 4));
+            JourBusiness.getInstance().refreshStats();
             setEndDaySummary();
         } else if(key.equals(endDayPref.getMinuteKey())) {
+            JourBusiness.getInstance().setEndDayMinute(sharedPreferences.getInt(key, 0));
+            JourBusiness.getInstance().refreshStats();
             setEndDaySummary();
-            JourBusiness.getInstance().setEndDayMinute(sharedPreferences.getInt(key, 4));
         } else if(key.equals(purgePref.getKey())) {
             JourBusiness.getInstance().setPurgeDelay(sharedPreferences.getInt(key, 40));
+            JourBusiness.getInstance().purge();
             setPurgeSummary();
         }
     }

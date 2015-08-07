@@ -3,7 +3,6 @@ package com.louiscarrese.clopecounter.model;
 import java.util.Date;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by loule on 17/07/2015.

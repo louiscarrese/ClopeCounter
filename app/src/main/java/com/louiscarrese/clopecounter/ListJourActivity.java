@@ -1,21 +1,20 @@
 package com.louiscarrese.clopecounter;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.louiscarrese.clopecounter.adapter.JourAdapter;
-import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
+import com.louiscarrese.clopecounter.model.Jour;
 
 import java.util.List;
 
 
-public class ListJourActivity extends ActionBarActivity {
+public class ListJourActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class ListJourActivity extends ActionBarActivity {
         JourAdapter adapter = new JourAdapter(this, jours);
 
         //Remplissage de la ListView
-        View header = (View)getLayoutInflater().inflate(R.layout.jours_list_header, null);
+        View header = getLayoutInflater().inflate(R.layout.jours_list_header, null);
         ListView listView = (ListView) findViewById(R.id.raw_jour_list);
         if(listView.getHeaderViewsCount() == 0) {
             listView.addHeaderView(header, null, false);

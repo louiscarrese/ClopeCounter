@@ -30,11 +30,6 @@ public class ClopeBusiness {
         return instance;
     }
 
-    public String clopeToString(Clope c) {
-        return c.getId() + " - " + c.getDate().toString();
-
-    }
-
     public Clope createClope() {
         Realm realm = Realm.getDefaultInstance();
 

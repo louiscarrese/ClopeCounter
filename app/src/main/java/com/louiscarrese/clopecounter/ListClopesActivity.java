@@ -1,7 +1,7 @@
 package com.louiscarrese.clopecounter;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +17,7 @@ import com.louiscarrese.clopecounter.model.Clope;
 import java.util.List;
 
 
-public class ListClopesActivity extends ActionBarActivity {
+public class ListClopesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class ListClopesActivity extends ActionBarActivity {
         ClopeAdapter adapter = new ClopeAdapter(this.getApplicationContext(), clopes);
 
         //Remplissage de la ListView
-        View header = (View)getLayoutInflater().inflate(R.layout.clope_list_header, null);
+        View header = getLayoutInflater().inflate(R.layout.clope_list_header, null);
         ListView listView = (ListView) findViewById(R.id.raw_clope_list);
         if(listView.getHeaderViewsCount() == 0) {
             listView.addHeaderView(header, null, false);

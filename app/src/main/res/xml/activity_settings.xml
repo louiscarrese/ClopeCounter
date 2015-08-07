@@ -6,7 +6,7 @@
     <com.louiscarrese.clopecounter.preferences.TimePickerPreference
         xmlns:custom="http://schemas.android.com/apk/res/com.louiscarrese.clopecounter"
         android:id="@+id/settings_endday_timepicker"
-        android:title="Heure de fin du jour"
+        android:title="@string/endday_timepicker_title"
         android:key="endday_timepicker"
         custom:hourKey="@string/endday_hour_key"
         custom:minuteKey="@string/endday_minute_key"

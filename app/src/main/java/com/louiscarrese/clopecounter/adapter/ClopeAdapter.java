@@ -11,8 +11,8 @@ import com.louiscarrese.clopecounter.R;
 import com.louiscarrese.clopecounter.model.Clope;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by loule on 05/08/2015.
@@ -33,7 +33,7 @@ public class ClopeAdapter extends ArrayAdapter<Clope> {
         // Lookup view for data population
         TextView clopeDate = (TextView) convertView.findViewById(R.id.clope_date);
         // Populate the data into the template view using the data object
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         clopeDate.setText(sdf.format(clope.getDate()));
         // Return the completed view to render on screen
         return convertView;

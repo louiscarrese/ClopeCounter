@@ -17,8 +17,8 @@ public class TimePickerPreference extends DialogPreference {
 
 
     private TimePicker timePicker;
-    private String hourKey;
-    private String minuteKey;
+    private final String hourKey;
+    private final String minuteKey;
 
     public TimePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);

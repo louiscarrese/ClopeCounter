@@ -22,7 +22,7 @@ import io.realm.RealmConfiguration;
  * Implementation of App Widget functionality.
  */
 public class ClopeCounterAppWidget extends AppWidgetProvider {
-    protected static final String ADD_CLICKED    = "clopeCounterWidgetAddClopeClick";
+    private static final String ADD_CLICKED    = "clopeCounterWidgetAddClopeClick";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -39,7 +39,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
 
             //Ajout de la clope
             JourBusiness utils = JourBusiness.getInstance();
-            Jour jour = utils.addClope();
+            utils.addClope();
 
             int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ClopeCounterAppWidget.class));
             updateAllWidgets(context, appWidgetManager, appWidgetIds);
@@ -68,7 +68,6 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
             realm.close();
         } catch(Exception e) {
             Log.e("MainActivity", "Error getting realm", e);
-            return;
         }
 
     }
@@ -80,13 +79,13 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
 
     private void updateAllWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
-            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
-    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                 int appWidgetId) {
 
         JourBusiness utils = JourBusiness.getInstance();
 
@@ -105,7 +104,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    protected void updateCounter(RemoteViews views, Jour jour) {
+    private void updateCounter(RemoteViews views, Jour jour) {
         views.setTextViewText(R.id.appwidget_nbclopes, String.format("%d", jour.getNbClopes()));
         views.setTextViewText(R.id.appwidget_avg7, String.format("%.2g", jour.getAvg7()));
 
@@ -115,7 +114,7 @@ public class ClopeCounterAppWidget extends AppWidgetProvider {
 
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+    private PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);

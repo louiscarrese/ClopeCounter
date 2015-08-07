@@ -48,7 +48,7 @@ public class JourBusiness {
         this.purgeDelay = purgeDelay;
     }
 
-    public Jour createJour() {
+    private Jour createJour() {
         Realm realm = Realm.getDefaultInstance();
 
         long id = realm.where(Jour.class).maximumInt("id") + 1;
@@ -59,12 +59,12 @@ public class JourBusiness {
         return j;
     }
 
-    public Date getCurrentDate() {
+    private Date getCurrentDate() {
         return stripHours(getDateJourFromDateClope(new Date()));
     }
 
 
-    public Date stripHours(Date in) {
+    private Date stripHours(Date in) {
         //Calendar cal = new GregorianCalendar();
         Calendar cal = Calendar.getInstance();
         cal.setTime(in);
@@ -74,9 +74,7 @@ public class JourBusiness {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
-        Date out = cal.getTime();
-
-        return out;
+        return cal.getTime();
     }
 
     /**
@@ -120,7 +118,7 @@ public class JourBusiness {
      * @param jour Le Jour à modifier
      * @return Le jours modifié.
      */
-    public Jour addClope(Jour jour) {
+    private Jour addClope(Jour jour) {
         ClopeBusiness clopeBusiness = ClopeBusiness.getInstance();
 
         //Ouverture de la transaction
@@ -159,16 +157,6 @@ public class JourBusiness {
     }
 
     /**
-     * Equivalent de Jour.toString() qu'on ne peut pas mettre dans jour à cause de Realm
-     *
-     * @param j le Jour à convertir en String
-     * @return Une String représentant le Jour
-     */
-    public String jourToString(Jour j) {
-        return j.getId() + " - " + j.getDate().toString() + " - " + j.getNbClopes() + " - " + j.getAvg7() + " - " + j.getAvg7Predict();
-    }
-
-    /**
      * Recalcule tous les Jours.
      */
     public void refreshStats() {
@@ -182,7 +170,7 @@ public class JourBusiness {
         //Récupération de toutes les clopes
         RealmResults<Clope> clopes = realm.where(Clope.class).findAll();
 
-        Map<String, Jour> jours = new HashMap<String, Jour>();
+        Map<String, Jour> jours = new HashMap<>();
 
         for(Clope c : clopes) {
             //Calcul du Jour correspondant
@@ -217,7 +205,7 @@ public class JourBusiness {
     }
 
 
-    public Jour refreshStats(Jour j) {
+    public void refreshStats(Jour j) {
         Realm realm = Realm.getDefaultInstance();
 
         long nbClopes = realm.where(Clope.class).between("date", getStartDate(j), getEndDate(j)).count();
@@ -226,11 +214,9 @@ public class JourBusiness {
 
         j.setAvg7(computeAvg(j.getDate(), -8, -1));
         j.setAvg7Predict(computeAvg(j.getDate(), -7, 0));
-
-        return j;
     }
 
-    public Date getEndDate(Jour j) {
+    private Date getEndDate(Jour j) {
         Date d = j.getDate();
 
         Calendar cal = new GregorianCalendar();
@@ -239,12 +225,10 @@ public class JourBusiness {
         cal.add(Calendar.HOUR_OF_DAY, this.endDayHour);
         cal.add(Calendar.MINUTE, this.endDayMinute);
 
-        Date dEnd = cal.getTime();
-
-        return dEnd;
+        return cal.getTime();
     }
 
-    public Date getStartDate(Jour j) {
+    private Date getStartDate(Jour j) {
         Date d = j.getDate();
 
         Calendar cal = new GregorianCalendar();
@@ -252,9 +236,7 @@ public class JourBusiness {
         cal.add(Calendar.HOUR_OF_DAY, this.endDayHour);
         cal.add(Calendar.MINUTE, this.endDayMinute);
 
-        Date dStart = cal.getTime();
-
-        return dStart;
+        return cal.getTime();
     }
 
 

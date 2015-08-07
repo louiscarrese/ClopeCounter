@@ -10,10 +10,9 @@ import android.widget.TextView;
 import com.louiscarrese.clopecounter.R;
 import com.louiscarrese.clopecounter.model.Jour;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by loule on 06/08/2015.
@@ -39,10 +38,10 @@ public class JourAdapter extends ArrayAdapter<Jour> {
         TextView jourAvg = (TextView) convertView.findViewById(R.id.jour_avg7);
 
         //Populate the data into the template view using the data object
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         jourDate.setText(sdf.format(jour.getDate()));
         jourNb.setText(String.format("%d", jour.getNbClopes()));
-        jourAvg.setText(String.format("%.2g", jour.getAvg7()));
+        jourAvg.setText(String.format("%.2f", jour.getAvg7()));
         return convertView;
     }
 }
