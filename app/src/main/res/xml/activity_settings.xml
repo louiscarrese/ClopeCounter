@@ -18,4 +18,8 @@
         android:title="@string/purge_numberpicker_title"
         android:key="@string/purge_delay_key"
         />
+    <Preference
+        android:id="@+id/settings_refresh_stats"
+        android:title="@string/refresh_stats"
+        android:key="refresh_stats" />
 </PreferenceScreen>

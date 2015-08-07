@@ -2,6 +2,7 @@ package com.louiscarrese.clopecounter;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import com.louiscarrese.clopecounter.business.JourBusiness;
@@ -21,6 +22,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         //Set the summaries
         setEndDaySummary();
         setPurgeSummary();
+
+        //A quick and dirty preference to refresh the stats
+        Preference myPref = findPreference("refresh_stats");
+        myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference pref) {
+                JourBusiness.getInstance().refreshStats();
+                return true;
+            }
+        });
 
     }
 

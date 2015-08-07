@@ -16,7 +16,6 @@
     <string name="menu_clope_random">Générer des clopes aléatoires</string>
     <string name="menu_main_list_clopes">Data: clopes</string>
     <string name="menu_main_list_jours">Data: jours</string>
-    <string name="menu_main_stats">Recalculer les statistiques</string>
 
     <!-- Jours list -->
     <string name="list_jour_hdr_date">Date</string>
@@ -41,5 +40,6 @@
     <string name="endday_timepicker_summary">Les jours finissent à %1$02d:%2$02d</string>
     <string name="purge_numberpicker_title">Délai de rétention des clopes</string>
     <string name="purge_numberpicker_summary">L\'historique des clopes est conservé %1$d jours</string>
+    <string name="refresh_stats">Recalculer les statistiques</string>
 
 </resources>

@@ -7,6 +7,4 @@
         android:orderInCategory="1" />
     <item android:id="@+id/action_raw_jour" android:title="@string/menu_main_list_jours"
         android:orderInCategory="2" />
-    <item android:id="@+id/action_rebuild_stats" android:title="@string/menu_main_stats"
-        android:orderInCategory="3" />
 </menu>

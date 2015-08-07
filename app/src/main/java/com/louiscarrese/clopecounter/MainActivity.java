@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent rawJourIntent = new Intent(this, ListJourActivity.class);
                 startActivityForResult(rawJourIntent, REQUEST_CODE_JOUR_LIST);
                 return true;
-            case R.id.action_rebuild_stats:
-                refreshStats();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
