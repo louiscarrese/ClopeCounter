@@ -56,6 +56,7 @@ public class TimePickerPreference extends DialogPreference {
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
+        timePicker.clearFocus();
         // When the user selects "OK", persist the new value
         if (positiveResult) {
             SharedPreferences.Editor editor = getEditor();
