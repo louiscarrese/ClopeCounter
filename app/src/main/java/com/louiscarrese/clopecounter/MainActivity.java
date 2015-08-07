@@ -5,19 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.louiscarrese.clopecounter.business.ClopeBusiness;
-import com.louiscarrese.clopecounter.model.Jour;
 import com.louiscarrese.clopecounter.business.JourBusiness;
-import com.louiscarrese.clopecounter.model.Migration;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import com.louiscarrese.clopecounter.model.Jour;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,25 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Handle the Realm configuration
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this.getApplicationContext())
-                .name("default.realm")
-                .schemaVersion(1) //TODO: Mettre ça quelque part en conf peut être ?
-                .migration(new Migration())
-                .build();
-        Realm.setDefaultConfiguration(realmConfig);
-
-        try {
-            Realm realm = Realm.getInstance(realmConfig);
-            realm.close();
-        } catch(Exception e) {
-            Log.e("MainActivity", "Error getting realm", e);
-            return;
-        }
-
         refreshCounters();
-
-
     }
 
     @Override
