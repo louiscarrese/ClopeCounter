@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import com.louiscarrese.clopecounter.business.JourBusiness;
+import com.louiscarrese.clopecounter.preferences.NumberPickerPreference;
+import com.louiscarrese.clopecounter.preferences.TimePickerPreference;
 
 /**
  * Created by loule on 06/08/2015.
@@ -18,6 +20,39 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         //Set the summaries
         setEndDaySummary();
+        setPurgeSummary();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        TimePickerPreference endDayPref = (TimePickerPreference) findPreference("endday_timepicker");
+        NumberPickerPreference purgePref = (NumberPickerPreference) findPreference("purge_delay");
+
+        if(key.equals(endDayPref.getHourKey())) {
+            JourBusiness.getInstance().setEndDayHour(sharedPreferences.getInt(key, 4));
+            setEndDaySummary();
+        } else if(key.equals(endDayPref.getMinuteKey())) {
+            setEndDaySummary();
+            JourBusiness.getInstance().setEndDayMinute(sharedPreferences.getInt(key, 4));
+        } else if(key.equals(purgePref.getKey())) {
+            JourBusiness.getInstance().setPurgeDelay(sharedPreferences.getInt(key, 40));
+            setPurgeSummary();
+        }
     }
 
     private void setEndDaySummary() {
@@ -34,14 +69,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         endDayPref.setSummary(String.format(summaryTemplate, hour, minute));
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        TimePickerPreference endDayPref = (TimePickerPreference) findPreference("endday_timepicker");
+    private void setPurgeSummary() {
+        //The template
+        String summaryTemplate = getString(R.string.purge_numberpicker_summary);
 
-        if(key.equals(endDayPref.getHourKey())) {
-            JourBusiness.getInstance().setEndDayHour(sharedPreferences.getInt(key, 4));
-        } else if(key.equals(endDayPref.getMinuteKey())) {
-            JourBusiness.getInstance().setEndDayMinute(sharedPreferences.getInt(key, 4));
-        }
+        //Needed objects
+        NumberPickerPreference purgePref = (NumberPickerPreference) findPreference("purge_delay");
+        SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
+
+        purgePref.setSummary(String.format(summaryTemplate, sp.getInt(purgePref.getKey(), 40)));
+
     }
+
 }

@@ -3,12 +3,19 @@
      android:layout_height="fill_parent"
      android:layout_width="fill_parent"
     >
-    <com.louiscarrese.clopecounter.TimePickerPreference
+    <com.louiscarrese.clopecounter.preferences.TimePickerPreference
         xmlns:custom="http://schemas.android.com/apk/res/com.louiscarrese.clopecounter"
         android:id="@+id/settings_endday_timepicker"
         android:title="Heure de fin du jour"
         android:key="endday_timepicker"
         custom:hourKey="@string/endday_hour_key"
         custom:minuteKey="@string/endday_minute_key"
+        />
+
+    <com.louiscarrese.clopecounter.preferences.NumberPickerPreference
+        xmlns:custom="http://schemas.android.com/apk/res/com.louiscarrese.clopecounter"
+        android:id="@+id/settings_purge_numberpicker"
+        android:title="@string/purge_numberpicker_title"
+        android:key="@string/purge_delay_key"
         />
 </PreferenceScreen>

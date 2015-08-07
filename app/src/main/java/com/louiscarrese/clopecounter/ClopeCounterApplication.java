@@ -2,7 +2,6 @@ package com.louiscarrese.clopecounter;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -15,7 +14,7 @@ import io.realm.RealmConfiguration;
 /**
  * Created by loule on 07/08/2015.
  */
-public class ClopeCounterApplication extends Application implements OnSharedPreferenceChangeListener{
+public class ClopeCounterApplication extends Application {
 
     @Override
     public void onCreate() {
@@ -43,15 +42,8 @@ public class ClopeCounterApplication extends Application implements OnSharedPref
         JourBusiness jourBusiness = JourBusiness.getInstance();
         jourBusiness.setEndDayHour(sp.getInt(getString(R.string.endday_hour_key), 4));
         jourBusiness.setEndDayMinute(sp.getInt(getString(R.string.endday_minute_key), 0));
+        jourBusiness.setPurgeDelay(sp.getInt(getString(R.string.purge_delay_key), 40));
 
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.endday_hour_key))) {
-            JourBusiness.getInstance().setEndDayHour(sharedPreferences.getInt(key, 4));
-        } else if(key.equals(getString(R.string.endday_minute_key))) {
-            JourBusiness.getInstance().setEndDayMinute(sharedPreferences.getInt(key, 0));
-        }
-    }
 }

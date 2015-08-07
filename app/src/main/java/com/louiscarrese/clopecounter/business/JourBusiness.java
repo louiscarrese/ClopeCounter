@@ -34,6 +34,7 @@ public class JourBusiness {
 
     private int endDayHour;
     private int endDayMinute;
+    private int purgeDelay;
 
     public void setEndDayHour(int endDayHour) {
         this.endDayHour = endDayHour;
@@ -41,6 +42,10 @@ public class JourBusiness {
 
     public void setEndDayMinute(int endDayMinute) {
         this.endDayMinute = endDayMinute;
+    }
+
+    public void setPurgeDelay(int purgeDelay) {
+        this.purgeDelay = purgeDelay;
     }
 
     public Jour createJour() {

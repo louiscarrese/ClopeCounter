@@ -13,9 +13,12 @@
     <!-- Preference keys -->
     <string name="endday_hour_key">endday_hour</string>
     <string name="endday_minute_key">endday_minute</string>
+    <string name="purge_delay_key">purge_delay</string>
 
     <!-- Preferences -->
     <string name="endday_timepicker_title">Heure de fin des jours</string>
     <string name="endday_timepicker_summary">Les jours finissent à %1$02d:%2$02d</string>
+    <string name="purge_numberpicker_title">Délai de rétention des clopes</string>
+    <string name="purge_numberpicker_summary">L\'historique des clopes est conservé %1$d jours</string>
 
 </resources>

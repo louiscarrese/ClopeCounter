@@ -1,6 +1,5 @@
-package com.louiscarrese.clopecounter;
+package com.louiscarrese.clopecounter.preferences;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -8,6 +7,8 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
+
+import com.louiscarrese.clopecounter.R;
 
 /**
  * Created by loule on 06/08/2015.
@@ -61,9 +62,6 @@ public class TimePickerPreference extends DialogPreference {
             editor.putInt(this.hourKey, timePicker.getCurrentHour());
             editor.putInt(this.minuteKey, timePicker.getCurrentMinute());
             editor.commit();
-            String summaryTemplate = getContext().getString(R.string.endday_timepicker_summary);
-            String summary = String.format(summaryTemplate, timePicker.getCurrentHour(), timePicker.getCurrentMinute());
-            setSummary(summary);
         }
     }
 
