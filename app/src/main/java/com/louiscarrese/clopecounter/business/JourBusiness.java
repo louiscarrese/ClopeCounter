@@ -3,7 +3,6 @@ package com.louiscarrese.clopecounter.business;
 import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -56,7 +55,7 @@ public class JourBusiness {
     }
 
     public Date getCurrentDate() {
-        return stripHours(new Date());
+        return stripHours(getDateJourFromDateClope(new Date()));
     }
 
 
@@ -185,22 +184,21 @@ public class JourBusiness {
             String dateJourString = dateJour.toString();
 
             //Si c'est la première fois qu'on le voit on l'ajoute
+            Jour j;
             if(!jours.containsKey(dateJourString)) {
-                Jour j = createJour();
+                j = createJour();
                 j.setDate(dateJour);
 
                 jours.put(dateJourString, j);
+            } else {
+                j = jours.get(dateJourString);
             }
+            j.setNbClopes(j.getNbClopes() + 1);
         }
 
-        //On fait les nbClopes d'abord pour qu'ils soient commités
+        //Copie de tous les Jours en base
         realm.beginTransaction();
-        List<Jour> joursFromDb = new ArrayList<Jour>();
-        for(Jour j : jours.values()) {
-            long nbClopes = realm.where(Clope.class).between("date", j.getDate(), getEndDate(j)).count();
-            j.setNbClopes((int)nbClopes);
-            joursFromDb.add(realm.copyToRealm(j));
-        }
+        List<Jour> joursFromDb = realm.copyToRealm(jours.values());
         realm.commitTransaction();
 
         //On  fait le reste des stats
@@ -216,9 +214,10 @@ public class JourBusiness {
     public Jour refreshStats(Jour j) {
         Realm realm = Realm.getDefaultInstance();
 
-        long nbClopes = realm.where(Clope.class).between("date", j.getDate(), getEndDate(j)).count();
+        long nbClopes = realm.where(Clope.class).between("date", getStartDate(j), getEndDate(j)).count();
 
         j.setNbClopes((int) nbClopes);
+
         j.setAvg7(computeAvg(j.getDate(), -8, -1));
         j.setAvg7Predict(computeAvg(j.getDate(), -7, 0));
 
@@ -231,10 +230,25 @@ public class JourBusiness {
         Calendar cal = new GregorianCalendar();
         cal.setTime(d);
         cal.add(Calendar.DAY_OF_YEAR, 1);
+        cal.add(Calendar.HOUR_OF_DAY, this.endDayHour);
+        cal.add(Calendar.MINUTE, this.endDayMinute);
 
         Date dEnd = cal.getTime();
 
         return dEnd;
+    }
+
+    public Date getStartDate(Jour j) {
+        Date d = j.getDate();
+
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(d);
+        cal.add(Calendar.HOUR_OF_DAY, this.endDayHour);
+        cal.add(Calendar.MINUTE, this.endDayMinute);
+
+        Date dStart = cal.getTime();
+
+        return dStart;
     }
 
     /**

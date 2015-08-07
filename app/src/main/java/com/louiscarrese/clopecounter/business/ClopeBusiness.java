@@ -1,7 +1,5 @@
 package com.louiscarrese.clopecounter.business;
 
-import android.content.Context;
-
 import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
 

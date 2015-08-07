@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         Jour jour = business.addClope();
 
-        refreshCounters(jour);
+        refreshCounters();
     }
 
     public void refreshStats(View view) {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         business.refreshStats();
 
-        refreshCounters(business.getToday());
+        refreshCounters();
     }
 
     public void addRandomClope(View view) {
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         refreshCounters(jour);
     }
     private void refreshCounters(Jour jour) {
+
         //Refresh counters on the main activity
         TextView todayValue = (TextView)findViewById(R.id.today_value);
         TextView avg7Value = (TextView)findViewById(R.id.avg7_value);
