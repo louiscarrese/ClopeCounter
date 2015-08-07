@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TimePickerPreference">
+        <attr name="hourKey" format="string" />
+        <attr name="minuteKey" format="string" />
+    </declare-styleable>
+</resources>

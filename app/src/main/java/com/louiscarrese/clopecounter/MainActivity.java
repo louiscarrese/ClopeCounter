@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch(id) {
             case R.id.action_settings:
-
-                //TODO: Faire l'écran de settings
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             case R.id.action_raw_clope:
                 Intent rawClopesIntent = new Intent(this, ListClopesActivity.class);

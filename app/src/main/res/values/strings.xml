@@ -5,6 +5,13 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_raw_clopes">Data : Clopes</string>
     <string name="title_activity_raw_jour">Data : Jours</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+
+    <!-- Preferences -->
+    <string name="endday_timepicker_title">Heure de fin des jours</string>
+    <string name="endday_timepicker_summary">Les jours finissent à %1$02d:%2$02d</string>
+
 </resources>
