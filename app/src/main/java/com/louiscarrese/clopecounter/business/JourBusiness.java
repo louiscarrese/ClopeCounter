@@ -1,8 +1,5 @@
 package com.louiscarrese.clopecounter.business;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.louiscarrese.clopecounter.model.Clope;
 import com.louiscarrese.clopecounter.model.Jour;
 
@@ -11,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +31,17 @@ public class JourBusiness {
             instance = new JourBusiness();
         }
         return instance;
+    }
+
+    private int endDayHour;
+    private int endDayMinute;
+
+    public void setEndDayHour(int endDayHour) {
+        this.endDayHour = endDayHour;
+    }
+
+    public void setEndDayMinute(int endDayMinute) {
+        this.endDayMinute = endDayMinute;
     }
 
     public Jour createJour() {
@@ -238,7 +245,14 @@ public class JourBusiness {
      * @return La date du Jour.
      */
     private Date getDateJourFromDateClope(Date dateClope) {
-        return stripHours(dateClope);
+        Calendar cal = new GregorianCalendar();
+
+        cal.setTime(dateClope);
+        cal.add(Calendar.HOUR_OF_DAY, this.endDayHour * -1);
+        cal.add(Calendar.MINUTE, this.endDayMinute * -1);
+
+
+        return stripHours(cal.getTime());
 
     }
 
@@ -321,4 +335,6 @@ public class JourBusiness {
         return avg;
 
     }
+
+
 }

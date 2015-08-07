@@ -8,7 +8,7 @@
         android:id="@+id/settings_endday_timepicker"
         android:title="Heure de fin du jour"
         android:key="endday_timepicker"
-        custom:hourKey="endday_hour"
-        custom:minuteKey="endday_minute"
+        custom:hourKey="@string/endday_hour_key"
+        custom:minuteKey="@string/endday_minute_key"
         />
 </PreferenceScreen>

@@ -10,6 +10,10 @@
     <string name="add_widget">Add widget</string>
 
 
+    <!-- Preference keys -->
+    <string name="endday_hour_key">endday_hour</string>
+    <string name="endday_minute_key">endday_minute</string>
+
     <!-- Preferences -->
     <string name="endday_timepicker_title">Heure de fin des jours</string>
     <string name="endday_timepicker_summary">Les jours finissent à %1$02d:%2$02d</string>
