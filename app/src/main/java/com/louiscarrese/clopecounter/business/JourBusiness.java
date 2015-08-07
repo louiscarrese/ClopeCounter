@@ -96,6 +96,7 @@ public class JourBusiness {
         //Récupération des données
         if (jour == null) {
             jour = initJour(this.getCurrentDate());
+            purge();
         }
 
         return jour;
@@ -256,6 +257,8 @@ public class JourBusiness {
         return dStart;
     }
 
+
+
     /**
      * Calcule la date du Jour pour une date de clope donnée.
      * TODO: Pour l'instant, ne fait que supprimer les heures, mais pourrait à terme permettre
@@ -355,5 +358,22 @@ public class JourBusiness {
 
     }
 
+    //TODO: shouldn't this be in ClopeBusiness ?
+    public void purge() {
+        //Compute the date up to which we will delete
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+
+        cal.add(Calendar.DAY_OF_YEAR, purgeDelay * -1);
+
+        //Delete all Clopes before that day
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.where(Clope.class).lessThan("date", cal.getTime()).findAll().clear();
+        realm.commitTransaction();
+
+        //Refresh the stats (just in case)
+        refreshStats();
+    }
 
 }
