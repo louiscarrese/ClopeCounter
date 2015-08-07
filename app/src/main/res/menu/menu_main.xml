@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_raw_clope" android:title="Raw Data : Clopes"
+    <item android:id="@+id/action_raw_clope" android:title="@string/menu_main_list_clopes"
         android:orderInCategory="1" />
-    <item android:id="@+id/action_raw_jour" android:title="Raw Data : Jours"
+    <item android:id="@+id/action_raw_jour" android:title="@string/menu_main_list_jours"
         android:orderInCategory="2" />
-    <item android:id="@+id/action_rebuild_stats" android:title="Recalculer les stats"
+    <item android:id="@+id/action_rebuild_stats" android:title="@string/menu_main_stats"
         android:orderInCategory="3" />
 </menu>

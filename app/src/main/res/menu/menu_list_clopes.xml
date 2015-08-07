@@ -2,6 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.louiscarrese.clopecounter.ListClopesActivity">
-    <item android:id="@+id/action_generate_random_clope" android:title="Generate random clopes"
+    <item android:id="@+id/action_generate_random_clope" android:title="@string/menu_ctx_clope_delete"
         android:orderInCategory="100" />
 </menu>

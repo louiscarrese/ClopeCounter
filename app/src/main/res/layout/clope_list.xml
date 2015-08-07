@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:gravity="center"
-        android:text="Date" />
+        android:text="@string/list_clope_hdr_date" />
 </LinearLayout>

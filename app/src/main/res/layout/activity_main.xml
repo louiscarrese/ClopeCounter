@@ -15,14 +15,13 @@
         <TextView android:id="@+id/today_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aujourd'hui : "
+            android:text="@string/main_today"
             android:textSize="24sp"
             />
         <TextView android:id="@+id/today_value"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="10"
             android:textSize="24sp"
             />
     </LinearLayout>
@@ -36,14 +35,13 @@
         <TextView android:id="@+id/avg7_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7 jours : "
+            android:text="@string/main_avg7"
             android:textSize="24sp"
             />
         <TextView android:id="@+id/avg7_value"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="25"
             android:textSize="24sp"
             />
     </LinearLayout>
@@ -57,14 +55,13 @@
         <TextView android:id="@+id/avg7_predict_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7 jours (demain): "
+            android:text="@string/main_avg7_predict"
             android:textSize="24sp"
             />
         <TextView android:id="@+id/avg7_predict_value"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="25"
             android:textSize="24sp"
             />
     </LinearLayout>
@@ -73,7 +70,7 @@
         android:id="@+id/add_clope"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="CLOPE !"
+        android:text="@string/main_clope_button"
         android:textSize="32sp"
         android:layout_alignParentBottom="true"
         android:onClick="addClope"

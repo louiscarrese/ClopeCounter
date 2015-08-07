@@ -9,7 +9,7 @@
         android:layout_weight="0.5"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:text="Date"
+        android:text="@string/list_jour_hdr_date"
         android:layout_gravity="left"
         android:layout_width="0dip" />
     <TextView
@@ -17,7 +17,7 @@
         android:layout_weight="0.25"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:text="Nb"
+        android:text="@string/list_jour_hdr_nb"
         android:layout_width="0dip"
         android:layout_gravity="right"
         />
@@ -26,7 +26,7 @@
         android:layout_weight="0.25"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:text="Avg"
+        android:text="@string/list_jour_hdr_avg7"
         android:layout_gravity="right"
         android:layout_width="0dip" />
 </LinearLayout>
