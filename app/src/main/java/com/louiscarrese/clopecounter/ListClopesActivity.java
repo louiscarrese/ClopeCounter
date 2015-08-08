@@ -1,7 +1,7 @@
 package com.louiscarrese.clopecounter;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +17,7 @@ import com.louiscarrese.clopecounter.model.Clope;
 import java.util.List;
 
 
-public class ListClopesActivity extends AppCompatActivity {
+public class ListClopesActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

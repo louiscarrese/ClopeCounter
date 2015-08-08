@@ -1,10 +1,10 @@
 package com.louiscarrese.clopecounter;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.louiscarrese.clopecounter.business.JourBusiness;
 import com.louiscarrese.clopecounter.model.Jour;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private static final int REQUEST_CODE_CLOPE_LIST = 1;
     private static final int REQUEST_CODE_JOUR_LIST = 2;

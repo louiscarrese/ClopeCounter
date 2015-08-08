@@ -1,7 +1,7 @@
 package com.louiscarrese.clopecounter;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +14,7 @@ import com.louiscarrese.clopecounter.model.Jour;
 import java.util.List;
 
 
-public class ListJourActivity extends AppCompatActivity {
+public class ListJourActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
