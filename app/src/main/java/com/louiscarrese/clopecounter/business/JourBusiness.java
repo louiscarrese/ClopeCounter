@@ -51,8 +51,12 @@ public class JourBusiness {
     private Jour createJour() {
         Realm realm = Realm.getDefaultInstance();
 
-        long id = realm.where(Jour.class).maximumInt("id") + 1;
-
+        long id;
+        if(realm.where(Jour.class).count() > 0) {
+             id = realm.where(Jour.class).maximumInt("id") + 1;
+        } else {
+            id = 1;
+        }
         Jour j = new Jour();
         j.setId(id);
 
@@ -93,8 +97,8 @@ public class JourBusiness {
 
         //Récupération des données
         if (jour == null) {
-            jour = initJour(this.getCurrentDate());
             purge();
+            jour = initJour(this.getCurrentDate());
         }
 
         return jour;
@@ -295,7 +299,8 @@ public class JourBusiness {
         realmJour.setAvg7(computeAvg(date, -8, -1));
         realmJour.setAvg7Predict(computeAvg(date, 7, 0)); //TODO: Calcul certainement faux puisque le jour courant n'existe pas encore...
         realm.commitTransaction();
-        return ret;
+
+        return realmJour;
     }
 
     /**
